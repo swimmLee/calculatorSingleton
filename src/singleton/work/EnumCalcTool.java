@@ -7,7 +7,7 @@ public enum EnumCalcTool  {
     private static int totalBMICalculated = 0;
     private static int numberOfCaculations = 0;
 
-    public static double calcBMI(double height, double weight, MeasurementSystem measurementSystem) {
+    public static double enumCalcBMI(double height, double weight, MeasurementSystem measurementSystem) {
         double bmi = weight / Math.pow(height, 2);
         if (measurementSystem == MeasurementSystem.ENGLISH) {
             bmi *= 703;
@@ -18,7 +18,7 @@ public enum EnumCalcTool  {
         return bmi;
     }
 
-    public static double averageBMI() {
+    public static double enumAverageBMI() {
         return totalBMICalculated / numberOfCaculations;
     }
 
