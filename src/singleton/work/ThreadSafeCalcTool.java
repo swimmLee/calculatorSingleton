@@ -6,25 +6,24 @@ public class ThreadSafeCalcTool {
     private static int totalBMICalculated = 0;
     private static int numberOfCaculations = 0;
     
-    public static CalcTool instance;
+    private static ThreadSafeCalcTool instance;
+    
+    private ThreadSafeCalcTool() {
+    }
 
-    public static double getBMI(double height, double weight, MeasurementSystem system) {
-        double bmi = 0;
+    public static ThreadSafeCalcTool getInstance() {
+        
         if(instance == null){
-            synchronized (CalcTool.class){
+            synchronized (ThreadSafeCalcTool.class){
                 if ( instance == null){
-                    instance = new CalcTool();
+                    instance = new ThreadSafeCalcTool();
                 }
-                bmi = instance.calcBMI(height, weight, system);
-                
-                totalBMICalculated += bmi;
-                numberOfCaculations++;
             }
         }
-        return bmi;
+        return instance;
     }
-    /*
-    public static double calcBMI(double height, double weight, MeasurementSystem measurementSystem) {
+    
+    public static double tsCalcBMI(double height, double weight, MeasurementSystem measurementSystem) {
         double bmi = weight / Math.pow(height, 2);
         if (measurementSystem == MeasurementSystem.ENGLISH) {
             bmi *= 703;
@@ -33,9 +32,9 @@ public class ThreadSafeCalcTool {
         numberOfCaculations++;
 
         return bmi;
-    }   */
+    }   
 
-    public static double averageBMI() {
+    public static double tsAverageBMI() {
         return totalBMICalculated / numberOfCaculations;
     }
 }
